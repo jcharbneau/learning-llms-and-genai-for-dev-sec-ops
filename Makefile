@@ -2,7 +2,7 @@ DOCKER_COMPOSE ?= docker compose
 SERVICE ?= notebooks
 NOTEBOOK_PORT ?= 8888
 
-.PHONY: help notebooks-build notebooks-up notebooks-down notebooks-logs notebooks-url notebooks-open
+.PHONY: help notebooks-build notebooks-up notebooks-down notebooks-logs notebooks-url notebooks-open test-smoke
 
 help:
 	@echo "Targets:"
@@ -12,6 +12,7 @@ help:
 	@echo "  make notebooks-logs   Show recent notebooks logs"
 	@echo "  make notebooks-url    Print latest Jupyter login URL"
 	@echo "  make notebooks-open   Open latest Jupyter login URL in browser"
+	@echo "  make test-smoke       Run offline smoke tests for notebooks/scripts"
 
 notebooks-build:
 	$(DOCKER_COMPOSE) build
@@ -60,3 +61,6 @@ notebooks-open:
 	else \
 		echo "Open this URL manually: $$url"; \
 	fi
+
+test-smoke:
+	python -m unittest tests/test_repo_smoke.py
