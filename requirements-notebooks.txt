@@ -20,6 +20,7 @@ unstructured>=0.16,<0.18
 
 # Agent/search/local model tooling
 duckduckgo-search>=6.3,<8.0
+ddgs>=9.0,<10.0
 ollama>=0.4,<1.0
 
 # Operations/security notebooks

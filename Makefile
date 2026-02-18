@@ -2,7 +2,7 @@ DOCKER_COMPOSE ?= docker compose
 SERVICE ?= notebooks
 NOTEBOOK_PORT ?= 8888
 
-.PHONY: help notebooks-build notebooks-up notebooks-down notebooks-logs notebooks-url notebooks-open test-smoke
+.PHONY: help notebooks-build notebooks-up notebooks-down notebooks-logs notebooks-url notebooks-open test-smoke test-e2e-notebooks test-e2e-notebooks-full
 
 help:
 	@echo "Targets:"
@@ -13,6 +13,8 @@ help:
 	@echo "  make notebooks-url    Print latest Jupyter login URL"
 	@echo "  make notebooks-open   Open latest Jupyter login URL in browser"
 	@echo "  make test-smoke       Run offline smoke tests for notebooks/scripts"
+	@echo "  make test-e2e-notebooks      Execute notebooks end-to-end (offline-safe set)"
+	@echo "  make test-e2e-notebooks-full Execute all notebooks end-to-end (includes network/API)"
 
 notebooks-build:
 	$(DOCKER_COMPOSE) build
@@ -64,3 +66,19 @@ notebooks-open:
 
 test-smoke:
 	python -m unittest tests/test_repo_smoke.py
+
+test-e2e-notebooks:
+	@python scripts/run_notebooks_e2e.py; rc=$$?; \
+	if [ $$rc -eq 2 ]; then \
+		$(DOCKER_COMPOSE) exec -T $(SERVICE) python scripts/run_notebooks_e2e.py; \
+	else \
+		exit $$rc; \
+	fi
+
+test-e2e-notebooks-full:
+	@python scripts/run_notebooks_e2e.py --include-network; rc=$$?; \
+	if [ $$rc -eq 2 ]; then \
+		$(DOCKER_COMPOSE) exec -T $(SERVICE) python scripts/run_notebooks_e2e.py --include-network; \
+	else \
+		exit $$rc; \
+	fi

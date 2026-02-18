@@ -7,6 +7,7 @@ from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 LESSONS_DIR = REPO_ROOT / "lessons"
+SCRIPTS_DIR = REPO_ROOT / "scripts"
 
 
 def _iter_notebooks() -> list[Path]:
@@ -71,6 +72,14 @@ class RepoSmokeTests(unittest.TestCase):
     def test_python_scripts_compile(self) -> None:
         scripts = sorted(LESSONS_DIR.rglob("*.py"))
         self.assertGreater(len(scripts), 0, "No python scripts found under lessons/")
+
+        for script in scripts:
+            with self.subTest(script=str(script)):
+                py_compile.compile(str(script), doraise=True)
+
+    def test_repo_scripts_compile(self) -> None:
+        scripts = sorted(SCRIPTS_DIR.rglob("*.py"))
+        self.assertGreater(len(scripts), 0, "No python scripts found under scripts/")
 
         for script in scripts:
             with self.subTest(script=str(script)):
