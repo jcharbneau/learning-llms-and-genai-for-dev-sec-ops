@@ -50,37 +50,117 @@ More to come !
 - Run your own meetup/hackaton using this repo as base and report back ! We love to hear those stories, send us pictures or videos ! 
 - Send thankyou tweet to [@patrickdebois](https://twitter.com/patrick.debois)
 
-## Requirements to run this repo (needs more love)
+## Modernization updates (2026-02-18)
 
-### Run it using a devcontainer
-This project contains a devcontainer to run the repo locally.
-Or you can use Google collab or so to run the notebooks
+This repository was updated to improve reproducibility and make local/container workflows consistent again.
 
-### Run it locally
-- We used Microsoft VSCode to run the demo
-- We run the python & jupyter notebooks locally
-- We use poetry as our virtual env python manager
+### What changed
+- Standardized runtime to Python 3.12 (`.python-version`)
+- Added a consolidated notebook dependency baseline (`requirements-notebooks.txt`)
+- Replaced the old Docker implementation with a Python 3.12 + virtualenv image (`Dockerfile`)
+- Added Docker Compose workflow for JupyterLab (`compose.yaml`)
+- Added environment template for model credentials (`.env.example`)
+- Updated devcontainer interpreter settings to use the container venv (`.devcontainer/devcontainer.json`)
+- Hardened `.gitignore` to avoid syncing local caches, notebook artifacts, envs, and local DB files
 
-Poetry is the new package manager on the block. Similar to Conda or Pip with venv.
+### Why this matters
+- You can run the lessons with fewer manual fixes and less dependency drift
+- Local development and container execution now use the same dependency source
+- Notebook startup and authentication behavior are now explicit and documented
+
+### Current status
+- Docker build and Jupyter startup have been validated
+- Core repo setup is modernized; notebook-by-notebook LangChain API migration is still in progress
+
+## Requirements to run this repo
+
+### Python version
+- Target runtime: Python 3.12 (`.python-version` is set to `3.12`)
+
+### Run it locally (recommended: virtual environment)
+Use a local `venv` so notebook installs do not leak into your system Python:
 
 ```shell
-poetry init
-poetry install --no-root
+python3.12 -m venv .venv
+source .venv/bin/activate
+python -m pip install --upgrade pip
+pip install -r requirements-notebooks.txt
+python -m ipykernel install --user --name learning-llms --display-name "learning-llms"
 ```
 
-### configure vscode to use poetry
-- install python 3.11 (most example work with 3.12 though) with pyenv
-- get the path pyenv `pyenv which python`
-- set the poetry pyton version `poetry env use <the python binary path from pyenv>`
-- find the poetry env path `poetry env info --path`
-- in vscode `view -> command pallete -> python: select interpreter -> enter interpreter path`
-- add the path `/Users/patrick.debois/Library/Caches/pypoetry/virtualenvs/london-devops-VW7lFx7f-py3.11` + add `/bin/python to it`
-- `poetry add ipykernel`
+If you need model provider credentials:
 
-### configure jupyter notebooks
-- install vscode plugin
-- install ipykernel
+```shell
+cp .env.example .env
+```
+
+### Run it with Docker Compose
+This starts JupyterLab on [http://localhost:8888](http://localhost:8888):
+
+```shell
+make notebooks-build
+make notebooks-up
+```
+
+Jupyter runs with token auth enabled by default. Get the login URL with:
+
+```shell
+make notebooks-url
+```
+
+Open in your browser automatically:
+
+```shell
+make notebooks-open
+```
+
+Stop containers:
+
+```shell
+make notebooks-down
+```
+
+### Automated notebook tests
+Run lightweight offline checks:
+
+```shell
+make test-smoke
+```
+
+Run notebook end-to-end execution (skips network/API notebooks unless enabled):
+
+```shell
+make test-e2e-notebooks
+```
+
+Run full notebook E2E execution:
+
+```shell
+make test-e2e-notebooks-full
+```
+
+`test-e2e-notebooks-full` will skip notebooks cleanly when required configuration is missing:
+- `LANGCHAIN_API_KEY` for LangSmith/Hub notebooks
+- `AZURE_OPENAI_API_KEY`, `AZURE_OPENAI_ENDPOINT`, `AZURE_VISION_DEPLOYMENT` for Azure vision notebook
+- `ollama` command/runtime for local Ollama notebook
+
+Optional local model controls for Ollama notebooks:
+
+```shell
+export OLLAMA_MODEL="qwen2.5-coder:1.5b"
+export OLLAMA_ALLOWED_MODELS="qwen2.5-coder:1.5b,qwen2.5-coder:7b"
+```
+
+### Run it using a devcontainer
+This project includes a devcontainer definition that uses the project Dockerfile.
+You can also run notebooks in Colab if preferred.
+
+### VS Code setup
+- Install extensions: Python + Jupyter
+- Select interpreter: `.venv/bin/python` for local, or `/opt/venv/bin/python` in container
+- Open notebooks from the `lessons/` folder and pick the `learning-llms` kernel
 
 ## Changelog 
 - 0.1 version with initial langchain syntax
 - 0.2 version adapted to new langchain-community , langchain-openai and new syntax
+- 0.3 modernization baseline: Python 3.12 target, venv-first local workflow, refreshed Docker/Compose runtime, and repository hygiene updates
