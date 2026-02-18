@@ -1,5 +1,9 @@
 # Environment and secrets
 .env
+
+# Local/generated runtime artifacts
+.artifacts/
+.Trash-0/
 *.env
 !.env.example
 
