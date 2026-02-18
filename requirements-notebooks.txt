@@ -1,0 +1,33 @@
+# Core notebook/runtime dependencies for lessons
+jupyterlab>=4.2,<5.0
+ipykernel>=6.29,<7.0
+python-dotenv>=1.0,<2.0
+ipywidgets>=8.1,<9.0
+
+# LangChain and model provider integrations
+langchain>=0.3,<0.4
+langchain-core>=0.3,<0.4
+langchain-community>=0.3,<0.4
+langchain-openai>=0.2,<0.4
+openai>=1.61,<2.0
+langsmith>=0.3,<0.5
+tiktoken>=0.8,<1.0
+
+# Retrieval/vector/data tooling
+chromadb>=0.5,<1.0
+markdown>=3.7,<4.0
+unstructured>=0.16,<0.18
+
+# Agent/search/local model tooling
+duckduckgo-search>=6.3,<8.0
+ollama>=0.4,<1.0
+
+# Operations/security notebooks
+gptcache>=0.1.43,<0.2
+onnxruntime>=1.19,<2.0
+transformers>=4.47,<5.0
+sentence-transformers>=3.3,<4.0
+loguru>=0.7,<1.0
+
+# Optional lessons (kept optional due fast-moving API surface)
+crewai>=0.100,<1.0
