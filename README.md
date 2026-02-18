@@ -102,6 +102,8 @@ make notebooks-build
 make notebooks-up
 ```
 
+The notebook image includes the `openclaw` CLI so OpenClaw lesson cells can run inside Docker.
+
 Jupyter runs with token auth enabled by default. Get the login URL with:
 
 ```shell
@@ -120,7 +122,7 @@ Stop containers:
 make notebooks-down
 ```
 
-Use host Ollama from Docker (macOS):
+Use host Ollama from Docker (macOS). Compose defaults `OLLAMA_BASE_URL` to this value:
 
 ```shell
 export OLLAMA_BASE_URL="http://host.docker.internal:11434"

@@ -20,6 +20,11 @@ COPY requirements-notebooks.txt ./
 RUN pip install --upgrade pip setuptools wheel \
     && pip install -r requirements-notebooks.txt
 
+# Install OpenClaw CLI in-container for notebook exercises.
+RUN curl -fsSL --proto '=https' --tlsv1.2 https://openclaw.ai/install-cli.sh \
+    | bash -s -- --prefix /opt/openclaw --no-onboard \
+    && ln -s /opt/openclaw/bin/openclaw /usr/local/bin/openclaw
+
 EXPOSE 8888
 
 CMD ["jupyter", "lab", "--ip=0.0.0.0", "--port=8888", "--no-browser", "--allow-root"]
