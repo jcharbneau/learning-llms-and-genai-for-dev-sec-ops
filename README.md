@@ -8,6 +8,7 @@ The lessons are mainly based on the [Langchain](https://github.com/langchain-ai/
 ### Tracks
 - `lessons/<area>/*-classic.ipynb`: legacy/classic LangChain-era demonstrations kept for comparison and evaluation
 - `lessons/2026-langchain/*.ipynb`: modern 2026 equivalents using current Runnable/LCEL-style patterns
+- `lessons/2026/<batch>/*.ipynb`: new ecosystem lessons grouped by 2026 topic batches (LiteLLM, LlamaIndex, DSPy, agent CLIs, ...)
 
 ### Developer
 - Calling a simple LLM using OpenAI
@@ -41,6 +42,7 @@ The lessons are mainly based on the [Langchain](https://github.com/langchain-ai/
 
 Jump right in <https://github.com/jedi4ever/learning-llms-and-genai-for-dev-sec-ops/tree/main/lessons>
 For modernized equivalents, start at `lessons/2026-langchain/00-modern-track-index.ipynb`.
+For non-LangChain ecosystem lessons, start at `lessons/2026/00-ecosystem-index.ipynb`.
 More to come !
 
 ## History of this repo
