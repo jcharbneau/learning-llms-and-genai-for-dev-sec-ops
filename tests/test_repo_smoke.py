@@ -102,6 +102,31 @@ class RepoSmokeTests(unittest.TestCase):
                         "Found deprecated .run(...) pattern; use invoke(...) instead.",
                     )
 
+    def test_ollama_notebooks_require_explicit_base_url(self) -> None:
+        notebooks = _iter_notebooks()
+
+        for notebook in notebooks:
+            data = json.loads(notebook.read_text(encoding="utf-8"))
+            for idx, cell in enumerate(data.get("cells", [])):
+                if cell.get("cell_type") != "code":
+                    continue
+
+                source = _normalize_source(cell.get("source", ""))
+                if "ChatOllama(" in source:
+                    with self.subTest(notebook=str(notebook), cell_index=idx, type="ChatOllama"):
+                        self.assertIn(
+                            "base_url=",
+                            source,
+                            "ChatOllama must set base_url from OLLAMA_BASE_URL for Docker host routing.",
+                        )
+                if "OllamaEmbeddings(" in source:
+                    with self.subTest(notebook=str(notebook), cell_index=idx, type="OllamaEmbeddings"):
+                        self.assertIn(
+                            "base_url=",
+                            source,
+                            "OllamaEmbeddings must set base_url from OLLAMA_BASE_URL for Docker host routing.",
+                        )
+
 
 if __name__ == "__main__":
     unittest.main()
