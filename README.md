@@ -130,6 +130,34 @@ export OLLAMA_BASE_URL="http://host.docker.internal:11434"
 
 Inside Docker, `localhost` points to the container itself. `host.docker.internal` routes to your Mac host where Ollama is running.
 
+### Ollama setup (host machine)
+For Docker notebooks, run Ollama on your host and keep `OLLAMA_BASE_URL=http://host.docker.internal:11434`.
+
+Install (macOS/Homebrew):
+
+```shell
+brew install ollama
+```
+
+Start Ollama service (or open the Ollama desktop app):
+
+```shell
+ollama serve
+```
+
+Pull a smaller model (recommended for laptops):
+
+```shell
+ollama pull qwen2.5-coder:1.5b
+```
+
+Verify:
+
+```shell
+ollama list
+curl http://localhost:11434/api/tags
+```
+
 ### OpenClaw prerequisites
 - Docker workflow: `openclaw` CLI is preinstalled in the notebook image (`Dockerfile`)
 - OpenAI use cases: set `OPENAI_API_KEY` in `.env` (or shell env before `make notebooks-up`)
