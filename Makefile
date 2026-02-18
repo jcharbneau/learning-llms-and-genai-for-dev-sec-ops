@@ -2,7 +2,7 @@ DOCKER_COMPOSE ?= docker compose
 SERVICE ?= notebooks
 NOTEBOOK_PORT ?= 8888
 
-.PHONY: help notebooks-build notebooks-up notebooks-down notebooks-logs notebooks-url notebooks-open test-smoke test-e2e-notebooks test-e2e-notebooks-full
+.PHONY: help notebooks-build notebooks-up notebooks-down notebooks-logs notebooks-url notebooks-open notebooks-clean notebooks-check-clean notebooks-pair dev-tools-install test-smoke test-e2e-notebooks test-e2e-notebooks-full
 
 help:
 	@echo "Targets:"
@@ -12,6 +12,10 @@ help:
 	@echo "  make notebooks-logs   Show recent notebooks logs"
 	@echo "  make notebooks-url    Print latest Jupyter login URL"
 	@echo "  make notebooks-open   Open latest Jupyter login URL in browser"
+	@echo "  make notebooks-clean  Strip notebook outputs/execution counts"
+	@echo "  make notebooks-check-clean  Fail if notebooks contain outputs"
+	@echo "  make notebooks-pair NOTEBOOK=path.ipynb  Pair notebook with jupytext markdown"
+	@echo "  make dev-tools-install Install notebook hygiene tooling (pre-commit/nbstripout/jupytext)"
 	@echo "  make test-smoke       Run offline smoke tests for notebooks/scripts"
 	@echo "  make test-e2e-notebooks      Execute notebooks end-to-end (offline-safe set)"
 	@echo "  make test-e2e-notebooks-full Execute all notebooks end-to-end (includes network/API)"
@@ -63,6 +67,24 @@ notebooks-open:
 	else \
 		echo "Open this URL manually: $$url"; \
 	fi
+
+dev-tools-install:
+	pip install -r requirements-dev.txt
+	pre-commit install
+
+notebooks-clean:
+	python scripts/clean_notebooks.py
+
+notebooks-check-clean:
+	python scripts/check_notebooks_clean.py
+
+notebooks-pair:
+	@if [ -z "$(NOTEBOOK)" ]; then \
+		echo "Usage: make notebooks-pair NOTEBOOK=lessons/path/notebook.ipynb"; \
+		exit 1; \
+	fi
+	jupytext --set-formats ipynb,md "$(NOTEBOOK)"
+	jupytext --sync "$(NOTEBOOK)"
 
 test-smoke:
 	python -m unittest tests/test_repo_smoke.py

@@ -211,6 +211,21 @@ export OLLAMA_MODEL="qwen2.5-coder:1.5b"
 export OLLAMA_ALLOWED_MODELS="qwen2.5-coder:1.5b,qwen2.5-coder:7b"
 ```
 
+### Notebook git hygiene (recommended)
+Notebook outputs tend to create noisy diffs. This repo supports an output-free workflow:
+
+```shell
+make dev-tools-install
+make notebooks-clean
+make notebooks-check-clean
+```
+
+What this provides:
+- `pre-commit` + `nbstripout`: strips notebook outputs before commit
+- `jupytext` support: optional pairing for text-first notebook editing
+  - `make notebooks-pair NOTEBOOK=lessons/path/notebook.ipynb`
+- CI enforcement: GitHub Actions checks that notebooks are output-clean
+
 ### Run it using a devcontainer
 This project includes a devcontainer definition that uses the project Dockerfile.
 You can also run notebooks in Colab if preferred.
