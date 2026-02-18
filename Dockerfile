@@ -4,7 +4,8 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
     PIP_DISABLE_PIP_VERSION_CHECK=1 \
     VIRTUAL_ENV=/opt/venv \
-    PATH="/opt/venv/bin:$PATH"
+    PATH="/opt/venv/bin:$PATH" \
+    HOME=/home/notebook
 
 WORKDIR /workspace
 
@@ -25,6 +26,13 @@ RUN curl -fsSL --proto '=https' --tlsv1.2 https://openclaw.ai/install-cli.sh \
     | bash -s -- --prefix /opt/openclaw --no-onboard \
     && ln -s /opt/openclaw/bin/openclaw /usr/local/bin/openclaw
 
+RUN groupadd --gid 1000 notebook \
+    && useradd --uid 1000 --gid notebook --create-home --shell /bin/bash notebook \
+    && mkdir -p /workspace \
+    && chown -R notebook:notebook /workspace /home/notebook
+
+USER notebook
+
 EXPOSE 8888
 
-CMD ["jupyter", "lab", "--ip=0.0.0.0", "--port=8888", "--no-browser", "--allow-root"]
+CMD ["jupyter", "lab", "--ip=0.0.0.0", "--port=8888", "--no-browser"]

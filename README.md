@@ -103,6 +103,7 @@ make notebooks-up
 ```
 
 The notebook image includes the `openclaw` CLI so OpenClaw lesson cells can run inside Docker.
+The container runs as an unprivileged `notebook` user (uid/gid `1000`) and stores runtime state under `/home/notebook` (not `/root`).
 
 Jupyter runs with token auth enabled by default. Get the login URL with:
 
