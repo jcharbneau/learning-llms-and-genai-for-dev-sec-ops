@@ -3,8 +3,9 @@ FROM python:3.12-slim
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
     PIP_DISABLE_PIP_VERSION_CHECK=1 \
-    VIRTUAL_ENV=/opt/venv \
-    PATH="/opt/venv/bin:$PATH" \
+    VENV_MODERN=/opt/venv-modern \
+    VENV_CLASSIC=/opt/venv-classic \
+    PATH="/opt/venv-modern/bin:$PATH" \
     HOME=/home/notebook
 
 WORKDIR /workspace
@@ -15,11 +16,16 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     git \
     && rm -rf /var/lib/apt/lists/*
 
-RUN python -m venv "$VIRTUAL_ENV"
-
-COPY requirements-notebooks.txt ./
-RUN pip install --upgrade pip setuptools wheel \
-    && pip install -r requirements-notebooks.txt
+COPY requirements-notebooks.txt requirements-notebooks-classic.txt ./
+RUN python -m venv "$VENV_MODERN" \
+    && "$VENV_MODERN/bin/pip" install --upgrade pip setuptools wheel \
+    && "$VENV_MODERN/bin/pip" install -r requirements-notebooks.txt \
+    && python -m venv "$VENV_CLASSIC" \
+    && "$VENV_CLASSIC/bin/pip" install --upgrade pip setuptools wheel \
+    && "$VENV_CLASSIC/bin/pip" install -r requirements-notebooks-classic.txt \
+    && "$VENV_MODERN/bin/python" -m ipykernel install --prefix /usr/local --name python3 --display-name "Python 3 (modern-langchain)" \
+    && "$VENV_MODERN/bin/python" -m ipykernel install --prefix /usr/local --name python3-modern --display-name "Python 3 (modern-langchain)" \
+    && "$VENV_CLASSIC/bin/python" -m ipykernel install --prefix /usr/local --name python3-classic --display-name "Python 3 (classic-langchain)"
 
 # Install OpenClaw CLI in-container for notebook exercises.
 RUN curl -fsSL --proto '=https' --tlsv1.2 https://openclaw.ai/install-cli.sh \

@@ -5,6 +5,10 @@ This repo aims to structure various information about LLMs and GenAi in a **less
 The lessons are mainly based on the [Langchain](https://github.com/langchain-ai/langchain) framework and expects a bit of familiarity with the Python programming language. Many examples have been borrowed from documentation pages and attribution is given where possible. Kudos to Langchain for collection so much material !
 
 ## Lessons overview
+### Tracks
+- `lessons/<area>/*-classic.ipynb`: legacy/classic LangChain-era demonstrations kept for comparison and evaluation
+- `lessons/2026-langchain/*.ipynb`: modern 2026 equivalents using current Runnable/LCEL-style patterns
+
 ### Developer
 - Calling a simple LLM using OpenAI
 - Looking at debugging in Langchain
@@ -36,6 +40,7 @@ The lessons are mainly based on the [Langchain](https://github.com/langchain-ai/
 - Show a simple prompt for asking the llm's opinon on Kubernetes and Trivy vulnerabilities
 
 Jump right in <https://github.com/jedi4ever/learning-llms-and-genai-for-dev-sec-ops/tree/main/lessons>
+For modernized equivalents, start at `lessons/2026-langchain/00-modern-track-index.ipynb`.
 More to come !
 
 ## History of this repo
@@ -104,6 +109,10 @@ make notebooks-up
 
 The notebook image includes the `openclaw` CLI so OpenClaw lesson cells can run inside Docker.
 The container runs as an unprivileged `notebook` user (uid/gid `1000`) and stores runtime state under `/home/notebook` (not `/root`).
+It also installs separate Jupyter kernels for split notebook tracks:
+- `Python 3 (classic-langchain)` (`python3-classic`) for `*-classic.ipynb`
+- `Python 3 (modern-langchain)` (`python3-modern`) for `lessons/2026-langchain/*.ipynb`
+- `Python 3 (modern-langchain)` (`python3`) as the default kernel
 
 Jupyter runs with token auth enabled by default. Get the login URL with:
 
@@ -208,8 +217,10 @@ You can also run notebooks in Colab if preferred.
 
 ### VS Code setup
 - Install extensions: Python + Jupyter
-- Select interpreter: `.venv/bin/python` for local, or `/opt/venv/bin/python` in container
-- Open notebooks from the `lessons/` folder and pick the `learning-llms` kernel
+- Select interpreter: `.venv/bin/python` for local, or `/opt/venv-modern/bin/python` in container
+- Open notebooks from the `lessons/` folder and pick the matching kernel:
+  - `Python 3 (classic-langchain)` for `*-classic.ipynb`
+  - `Python 3 (modern-langchain)` for `lessons/2026-langchain/*.ipynb`
 
 ## Changelog 
 - 0.1 version with initial langchain syntax
