@@ -12,7 +12,7 @@
 	"customizations": {
 		"vscode": {
 			"settings": {
-				"python.poetryPath": "/opt/poetry/bin/poetry"
+				"python.defaultInterpreterPath": "/opt/venv/bin/python"
 			},
 			"extensions": [
 				"matangover.mypy",

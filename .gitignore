@@ -1,10 +1,50 @@
-*.env
+# Environment and secrets
 .env
-__pychache__
+*.env
+!.env.example
+
+# Python virtual environments
+.venv/
+venv/
+env/
+
+# Python bytecode and caches
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+.pyre/
+.hypothesis/
+
+# Coverage and test output
+.coverage
+.coverage.*
+htmlcov/
+
+# Jupyter and notebook runtime artifacts
+.ipynb_checkpoints/
+.jupyter/
+profile_default/
+
+# Local lesson/cache artifacts
 map_cache*
 similar_cache*
 output.log
-*.pyc
 chromadb/
 chroma_db/
+*.db
+*.sqlite
+*.sqlite3
+
+# Build artifacts
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# OS/editor noise
 .DS_Store
+Thumbs.db

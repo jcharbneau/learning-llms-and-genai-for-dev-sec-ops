@@ -1,45 +1,25 @@
-FROM python:3.11.2-bullseye
+FROM python:3.12-slim
 
-# install bash completion - to make make work
-RUN apt-get update && apt-get install -y bash-completion
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PIP_DISABLE_PIP_VERSION_CHECK=1 \
+    VIRTUAL_ENV=/opt/venv \
+    PATH="/opt/venv/bin:$PATH"
 
-# Add user python - this also creates the homedir
-RUN useradd -ms /bin/bash python
+WORKDIR /workspace
 
-# Create some dirs 
-# used for poetry env
-RUN mkdir -p /opt/poetry
-RUN mkdir -p /opt/poetry-cache
-# used for poetry virtual envs
-RUN mkdir -p /opt/virtual-envs
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+    curl \
+    git \
+    && rm -rf /var/lib/apt/lists/*
 
-# set the correct ownership
-RUN chown python /opt/virtual-envs
-RUN chown python /opt/poetry
-RUN chown python /opt/poetry-cache
+RUN python -m venv "$VIRTUAL_ENV"
 
-# Switch to python user
-USER python
+COPY requirements-notebooks.txt ./
+RUN pip install --upgrade pip setuptools wheel \
+    && pip install -r requirements-notebooks.txt
 
+EXPOSE 8888
 
-# Create a Python virtual environment for Poetry and install it
-# Define the version of Poetry to install (default is 1.5.1)
-
-ARG POETRY_VERSION=1.5.1
-ARG POETRY_HOME=/opt/poetry
-
-RUN python3 -m venv ${POETRY_HOME} && \
-    $POETRY_HOME/bin/pip install --upgrade pip && \
-    $POETRY_HOME/bin/pip install poetry==${POETRY_VERSION}
-
-# Test if Poetry is installed in the expected path
-RUN echo "Poetry version:" && $POETRY_HOME/bin/poetry --version
-
-# add poetry to paths
-RUN echo $PATH
-RUN echo "export PATH=$PATH:/opt/poetry/bin" >> ~/.bashrc
-RUN cat ~/.bashrc
-RUN echo $PATH
-
-COPY poetry.lock pyproject.toml ./
-RUN $POETRY_HOME/bin/poetry install --no-root
+CMD ["jupyter", "lab", "--ip=0.0.0.0", "--port=8888", "--no-browser", "--allow-root"]
