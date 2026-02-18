@@ -120,6 +120,14 @@ Stop containers:
 make notebooks-down
 ```
 
+Use host Ollama from Docker (macOS):
+
+```shell
+export OLLAMA_BASE_URL="http://host.docker.internal:11434"
+```
+
+Inside Docker, `localhost` points to the container itself. `host.docker.internal` routes to your Mac host where Ollama is running.
+
 ### Automated notebook tests
 Run lightweight offline checks:
 
@@ -142,7 +150,7 @@ make test-e2e-notebooks-full
 `test-e2e-notebooks-full` will skip notebooks cleanly when required configuration is missing:
 - `LANGCHAIN_API_KEY` for LangSmith/Hub notebooks
 - `AZURE_OPENAI_API_KEY`, `AZURE_OPENAI_ENDPOINT`, `AZURE_VISION_DEPLOYMENT` for Azure vision notebook
-- `ollama` command/runtime for local Ollama notebook
+- both `OLLAMA_BASE_URL` and `ollama` CLI are unavailable for Ollama notebooks
 
 Optional local model controls for Ollama notebooks:
 

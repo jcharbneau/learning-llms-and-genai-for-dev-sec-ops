@@ -167,6 +167,7 @@ def parse_ollama_models_list(ollama_cmd: list[str]) -> set[str]:
 def preflight_skip_reason(
     req: NotebookRequirements,
     include_network: bool,
+    ollama_base_url: str | None,
     ollama_cmd: list[str] | None,
     ollama_models_available: set[str] | None,
 ) -> str | None:
@@ -193,8 +194,8 @@ def preflight_skip_reason(
         return "LANGCHAIN_API_KEY is not set (required for LangSmith/Hub notebooks)"
 
     if req.needs_ollama:
-        if ollama_cmd is None:
-            return "ollama command not available"
+        if ollama_cmd is None and not ollama_base_url:
+            return "OLLAMA_BASE_URL is not set and ollama CLI is not available"
 
         allowed = parse_ollama_allowed_models()
         if req.ollama_models:
@@ -206,10 +207,11 @@ def preflight_skip_reason(
                     + f" (allowed: {', '.join(sorted(allowed))})"
                 )
 
-            available = ollama_models_available or set()
-            missing = sorted(model for model in req.ollama_models if model not in available)
-            if missing:
-                return "Ollama models not installed locally: " + ", ".join(missing)
+            if ollama_cmd is not None:
+                available = ollama_models_available or set()
+                missing = sorted(model for model in req.ollama_models if model not in available)
+                if missing:
+                    return "Ollama models not installed locally: " + ", ".join(missing)
 
     return None
 
@@ -288,6 +290,7 @@ def main() -> int:
         return 1
 
     output_dir = Path(args.output_dir)
+    ollama_base_url = os.getenv("OLLAMA_BASE_URL")
     ollama_cmd = resolve_ollama_cmd()
     ollama_models_available = (
         parse_ollama_models_list(ollama_cmd) if ollama_cmd is not None else None
@@ -302,6 +305,7 @@ def main() -> int:
         skip_reason = preflight_skip_reason(
             req,
             include_network=args.include_network,
+            ollama_base_url=ollama_base_url,
             ollama_cmd=ollama_cmd,
             ollama_models_available=ollama_models_available,
         )
