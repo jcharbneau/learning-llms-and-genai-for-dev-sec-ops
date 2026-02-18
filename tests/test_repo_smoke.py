@@ -1,11 +1,20 @@
 import json
 import py_compile
+import re
 import unittest
 from pathlib import Path
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 LESSONS_DIR = REPO_ROOT / "lessons"
+
+
+def _iter_notebooks() -> list[Path]:
+    return sorted(
+        p
+        for p in LESSONS_DIR.rglob("*.ipynb")
+        if ".ipynb_checkpoints" not in p.parts
+    )
 
 
 def _normalize_source(source: object) -> str:
@@ -32,7 +41,7 @@ def _sanitize_for_compile(code: str) -> str:
 
 class RepoSmokeTests(unittest.TestCase):
     def test_notebooks_are_valid_json_and_have_cells(self) -> None:
-        notebooks = sorted(LESSONS_DIR.rglob("*.ipynb"))
+        notebooks = _iter_notebooks()
         self.assertGreater(len(notebooks), 0, "No notebooks found under lessons/")
 
         for notebook in notebooks:
@@ -43,7 +52,7 @@ class RepoSmokeTests(unittest.TestCase):
                 self.assertGreater(len(data["cells"]), 0)
 
     def test_notebook_code_cells_compile_after_sanitizing_magics(self) -> None:
-        notebooks = sorted(LESSONS_DIR.rglob("*.ipynb"))
+        notebooks = _iter_notebooks()
 
         for notebook in notebooks:
             data = json.loads(notebook.read_text(encoding="utf-8"))
@@ -66,6 +75,23 @@ class RepoSmokeTests(unittest.TestCase):
         for script in scripts:
             with self.subTest(script=str(script)):
                 py_compile.compile(str(script), doraise=True)
+
+    def test_notebooks_avoid_deprecated_run_calls(self) -> None:
+        notebooks = _iter_notebooks()
+        deprecated = re.compile(r"(?<!subprocess)\.run\(")
+
+        for notebook in notebooks:
+            data = json.loads(notebook.read_text(encoding="utf-8"))
+            for idx, cell in enumerate(data.get("cells", [])):
+                if cell.get("cell_type") != "code":
+                    continue
+
+                source = _normalize_source(cell.get("source", ""))
+                with self.subTest(notebook=str(notebook), cell_index=idx):
+                    self.assertIsNone(
+                        deprecated.search(source),
+                        "Found deprecated .run(...) pattern; use invoke(...) instead.",
+                    )
 
 
 if __name__ == "__main__":
