@@ -41,6 +41,40 @@ def _sanitize_for_compile(code: str) -> str:
 
 
 class RepoSmokeTests(unittest.TestCase):
+    def test_classic_notebooks_live_under_lessons_classic(self) -> None:
+        notebooks = _iter_notebooks()
+        classic_named = [p for p in notebooks if p.name.endswith("-classic.ipynb")]
+        self.assertGreater(len(classic_named), 0, "No classic notebooks found.")
+
+        for notebook in classic_named:
+            rel = notebook.relative_to(REPO_ROOT).as_posix()
+            with self.subTest(notebook=rel):
+                self.assertTrue(
+                    rel.startswith("lessons/classic/"),
+                    "Classic notebooks must live under lessons/classic/.",
+                )
+
+    def test_lessons_classic_notebooks_have_preflight_block(self) -> None:
+        notebooks = sorted(
+            p
+            for p in (LESSONS_DIR / "classic").rglob("*.ipynb")
+            if ".ipynb_checkpoints" not in p.parts and p.name != "00-classic-track-index.ipynb"
+        )
+        self.assertGreater(len(notebooks), 0, "No notebooks found under lessons/classic.")
+
+        for notebook in notebooks:
+            rel = notebook.relative_to(REPO_ROOT).as_posix()
+            data = json.loads(notebook.read_text(encoding="utf-8"))
+            cells = data.get("cells", [])
+            self.assertGreaterEqual(len(cells), 2, f"{rel} should have preflight markdown+code cells.")
+
+            first_md = _normalize_source(cells[0].get("source", "")) if cells else ""
+            first_code = _normalize_source(cells[1].get("source", "")) if len(cells) > 1 else ""
+            with self.subTest(notebook=rel):
+                self.assertIn("Classic Environment Preflight", first_md)
+                self.assertIn("CLASSIC=1 make notebooks-build", first_code)
+                self.assertIn("import langchain", first_code)
+
     def test_notebooks_are_valid_json_and_have_cells(self) -> None:
         notebooks = _iter_notebooks()
         self.assertGreater(len(notebooks), 0, "No notebooks found under lessons/")

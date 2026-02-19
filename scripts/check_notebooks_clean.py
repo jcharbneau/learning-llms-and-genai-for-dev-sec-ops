@@ -22,7 +22,7 @@ def iter_notebooks() -> list[Path]:
 
 def is_enforced_notebook(path: Path) -> bool:
     rel = path.relative_to(REPO_ROOT).as_posix()
-    return rel.startswith("lessons/2026/") or path.name.endswith("-classic.ipynb")
+    return rel.startswith("lessons/2026/") or rel.startswith("lessons/classic/")
 
 
 def main() -> int:
