@@ -25,6 +25,14 @@ def lesson_notebooks() -> list[Path]:
     paths: list[Path] = []
     for track in TRACKS:
         paths.extend(sorted((REPO_ROOT / "lessons" / "2026" / track).glob("0[1-8]-*.ipynb")))
+    # LangChain modern track uses domain-prefixed filenames instead of 01..08 naming.
+    paths.extend(
+        sorted(
+            p
+            for p in (REPO_ROOT / "lessons" / "2026" / "langchain").glob("*.ipynb")
+            if p.name != "00-modern-track-index.ipynb"
+        )
+    )
     return paths
 
 

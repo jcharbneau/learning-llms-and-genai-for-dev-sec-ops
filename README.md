@@ -32,6 +32,8 @@ Each lesson includes:
 
 See `lessons/2026/CURRICULUM_SPEC.md` for the per-notebook curriculum blueprint.
 
+The same lesson structure is now also applied to `lessons/2026/langchain/*.ipynb` (except the index notebook).
+
 ### Developer
 - Calling a simple LLM using OpenAI
 - Looking at debugging in Langchain
