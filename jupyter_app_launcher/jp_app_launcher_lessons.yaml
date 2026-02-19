@@ -1,7 +1,7 @@
 - title: Lessons Home
   description: Launch the curated lessons dashboard.
   type: jupyterlab-commands
-  catalog: Start Here
+  catalog: 00 Start Here
   icon: /workspace/jupyter_app_launcher/icons/home.svg
   source:
     - label: Open
@@ -9,10 +9,19 @@
       args:
         path: 00-home.ipynb
 
+- title: Terminal (Lessons)
+  description: Open a terminal in the lessons workspace.
+  type: jupyterlab-commands
+  catalog: 00 Start Here
+  icon: /workspace/jupyter_app_launcher/icons/agentcli.svg
+  source:
+    - label: Open
+      id: terminal:create-new
+
 - title: 2026 Ecosystem Index
   description: Entry point for all modern 2026 tracks.
   type: jupyterlab-commands
-  catalog: Start Here
+  catalog: 00 Start Here
   icon: /workspace/jupyter_app_launcher/icons/ecosystem.svg
   source:
     - label: Open
@@ -23,7 +32,7 @@
 - title: LangChain (2026)
   description: Runnable/LCEL-first modern LangChain track.
   type: jupyterlab-commands
-  catalog: 2026 Tracks
+  catalog: 01 2026 Tracks
   icon: /workspace/jupyter_app_launcher/icons/langchain.svg
   source:
     - label: Open
@@ -34,7 +43,7 @@
 - title: LiteLLM Track
   description: Routing, fallback, reliability, and governance.
   type: jupyterlab-commands
-  catalog: 2026 Tracks
+  catalog: 01 2026 Tracks
   icon: /workspace/jupyter_app_launcher/icons/litellm.svg
   source:
     - label: Open
@@ -45,7 +54,7 @@
 - title: LlamaIndex Track
   description: RAG retrieval architecture and evaluation.
   type: jupyterlab-commands
-  catalog: 2026 Tracks
+  catalog: 01 2026 Tracks
   icon: /workspace/jupyter_app_launcher/icons/llamaindex.svg
   source:
     - label: Open
@@ -56,7 +65,7 @@
 - title: DSPy Track
   description: Program design, optimization, and release checks.
   type: jupyterlab-commands
-  catalog: 2026 Tracks
+  catalog: 01 2026 Tracks
   icon: /workspace/jupyter_app_launcher/icons/dspy.svg
   source:
     - label: Open
@@ -67,7 +76,7 @@
 - title: Agent CLIs Track
   description: Agent tooling workflows, controls, and benchmarks.
   type: jupyterlab-commands
-  catalog: 2026 Tracks
+  catalog: 01 2026 Tracks
   icon: /workspace/jupyter_app_launcher/icons/agentcli.svg
   source:
     - label: Open
@@ -78,7 +87,7 @@
 - title: OpenClaw Track
   description: Gateway setup, policy controls, and production readiness.
   type: jupyterlab-commands
-  catalog: 2026 Tracks
+  catalog: 01 2026 Tracks
   icon: /workspace/jupyter_app_launcher/icons/openclaw.svg
   source:
     - label: Open
@@ -89,7 +98,7 @@
 - title: Classic LangChain Index
   description: Legacy lessons for historical comparison.
   type: jupyterlab-commands
-  catalog: Classic
+  catalog: 02 Classic
   icon: /workspace/jupyter_app_launcher/icons/classic.svg
   source:
     - label: Open
