@@ -10,6 +10,28 @@ The lessons are mainly based on the [Langchain](https://github.com/langchain-ai/
 - `lessons/2026/langchain/*.ipynb`: modern 2026 equivalents using current Runnable/LCEL-style patterns
 - `lessons/2026/<batch>/*.ipynb`: new ecosystem lessons grouped by 2026 topic batches (LiteLLM, LlamaIndex, DSPy, agent CLIs, ...)
 
+### 2026 curriculum contract (non-LangChain tracks)
+The 2026 ecosystem tracks in:
+- `lessons/2026/litellm/`
+- `lessons/2026/llamaindex/`
+- `lessons/2026/dspy/`
+- `lessons/2026/agent-clis/`
+
+follow a strict lesson structure designed for progressive learning (01 -> 08):
+- `What This Lesson Is`
+- `Scientific Lens` (concept, measure, validity limit)
+- `How It Works`
+- `Code Walkthrough`
+- `Applied Labs` (unique per notebook)
+- `Validation Checklist` (unique per notebook)
+- `Further Reading` (official/primary sources)
+
+Each lesson includes:
+- `Deterministic Demo`: always runnable, concept-focused
+- `Live Demo`: real provider/CLI execution with explicit graceful skip behavior
+
+See `lessons/2026/CURRICULUM_SPEC.md` for the per-notebook curriculum blueprint.
+
 ### Developer
 - Calling a simple LLM using OpenAI
 - Looking at debugging in Langchain
@@ -116,6 +138,11 @@ It also installs separate Jupyter kernels for split notebook tracks:
 - `Python 3 (modern-langchain)` (`python3-modern`) for `lessons/2026/langchain/*.ipynb`
 - `Python 3 (modern-langchain)` (`python3`) as the default kernel
 
+For `lessons/2026/agent-clis/`:
+- `openclaw` is preinstalled in the container image and is the primary in-container CLI path.
+- Additional CLIs (`codex`, `claude`, `opencode`) are attempted as optional npm installs in Docker build and may vary by runtime/package availability.
+- Agent-CLI live demo cells check tool availability first and skip gracefully when needed.
+
 Jupyter runs with token auth enabled by default. Get the login URL with:
 
 ```shell
@@ -220,6 +247,7 @@ Notebook outputs tend to create noisy diffs. This repo supports an output-free w
 make dev-tools-install
 make notebooks-clean
 make notebooks-check-clean
+make notebooks-check-curriculum
 ```
 
 What this provides:
@@ -227,6 +255,7 @@ What this provides:
 - `jupytext` support: optional pairing for text-first notebook editing
   - `make notebooks-pair NOTEBOOK=lessons/path/notebook.ipynb`
 - CI enforcement: GitHub Actions checks that notebooks are output-clean
+- Curriculum enforcement: `make notebooks-check-curriculum` validates 2026 lesson contract rules
 
 ### Run it using a devcontainer
 This project includes a devcontainer definition that uses the project Dockerfile.
