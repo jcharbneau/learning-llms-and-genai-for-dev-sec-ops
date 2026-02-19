@@ -6,7 +6,7 @@ The lessons are mainly based on the [Langchain](https://github.com/langchain-ai/
 
 ## Lessons overview
 ### Tracks
-- `lessons/<area>/*-classic.ipynb`: legacy/classic LangChain-era demonstrations kept for comparison and evaluation
+- `lessons/classic/<area>/*-classic.ipynb`: legacy/classic LangChain-era demonstrations kept for comparison and evaluation
 - `lessons/2026/langchain/*.ipynb`: modern 2026 equivalents using current Runnable/LCEL-style patterns
 - `lessons/2026/<batch>/*.ipynb`: new ecosystem lessons grouped by 2026 topic batches (LiteLLM, LlamaIndex, DSPy, agent CLIs, ...)
 
@@ -66,6 +66,7 @@ The same lesson structure is now also applied to `lessons/2026/langchain/*.ipynb
 
 Jump right in <https://github.com/jedi4ever/learning-llms-and-genai-for-dev-sec-ops/tree/main/lessons>
 For modernized equivalents, start at `lessons/2026/langchain/00-modern-track-index.ipynb`.
+For legacy notebooks, start at `lessons/classic/00-classic-track-index.ipynb`.
 For 2026 ecosystem batches (LangChain + non-LangChain), start at `lessons/2026/00-ecosystem-index.ipynb`.
 More to come !
 
