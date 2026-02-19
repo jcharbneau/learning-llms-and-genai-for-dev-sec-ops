@@ -1,4 +1,5 @@
 import json
+import importlib.util
 import py_compile
 import re
 import unittest
@@ -41,6 +42,16 @@ def _sanitize_for_compile(code: str) -> str:
 
 
 class RepoSmokeTests(unittest.TestCase):
+    def test_navigation_contract(self) -> None:
+        module_path = SCRIPTS_DIR / "check_navigation_contract.py"
+        spec = importlib.util.spec_from_file_location("check_navigation_contract", module_path)
+        self.assertIsNotNone(spec)
+        self.assertIsNotNone(spec.loader)
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        errors = module.validate()
+        self.assertEqual([], errors, f"Navigation contract violations: {errors}")
+
     def test_classic_notebooks_live_under_lessons_classic(self) -> None:
         notebooks = _iter_notebooks()
         classic_named = [p for p in notebooks if p.name.endswith("-classic.ipynb")]

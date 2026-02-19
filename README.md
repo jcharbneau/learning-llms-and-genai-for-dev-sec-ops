@@ -154,6 +154,30 @@ JupyterLab Launcher tiles are preconfigured for lesson entry points (Start Here,
 - `jupyter_app_launcher/icons/*.svg`
 - `JUPYTER_APP_LAUNCHER_PATH=/workspace/jupyter_app_launcher`
 
+### Graphical click-through navigation
+Navigation is intentionally layered to avoid file-browser hopping:
+
+1. Launcher tile -> `lessons/00-home.ipynb`
+2. Lessons home cards -> `lessons/2026/00-ecosystem-index.ipynb` (or direct track pages)
+3. Ecosystem cards -> track index notebook (`lessons/2026/<track>/00-track-index.ipynb`)
+4. Track cards -> lesson notebooks (`01..N`)
+
+This gives a full click-through path from Launcher to lesson content.
+
+Maintenance workflow:
+- Add a new 2026 track:
+  1. Create `lessons/2026/<track>/00-track-index.ipynb`
+  2. Add lesson notebooks under that folder
+  3. Link the track from `lessons/2026/00-ecosystem-index.ipynb`
+  4. Optionally add a Launcher tile in `jupyter_app_launcher/jp_app_launcher_lessons.yaml`
+- Add a new lesson:
+  1. Add the `.ipynb` under the track folder
+  2. Add/update its card link in the track index notebook
+- Add a launcher tile:
+  1. Add an icon under `jupyter_app_launcher/icons/`
+  2. Add a tile entry in `jupyter_app_launcher/jp_app_launcher_lessons.yaml`
+  3. Restart notebooks container (`make notebooks-down && make notebooks-up`)
+
 For `lessons/2026/agent-clis/`:
 - `openclaw` is preinstalled in the container image and is the primary in-container CLI path.
 - Additional CLIs (`codex`, `claude`, `opencode`) are attempted as optional npm installs in Docker build and may vary by runtime/package availability.
@@ -265,6 +289,7 @@ make dev-tools-install
 make notebooks-clean
 make notebooks-check-clean
 make notebooks-check-curriculum
+python scripts/check_navigation_contract.py
 ```
 
 Daily workflow (recommended):
