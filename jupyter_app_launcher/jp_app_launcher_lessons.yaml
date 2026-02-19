@@ -75,6 +75,17 @@
       args:
         path: 2026/agent-clis/00-track-index.ipynb
 
+- title: OpenClaw Track
+  description: Gateway setup, policy controls, and production readiness.
+  type: jupyterlab-commands
+  catalog: 2026 Tracks
+  icon: /workspace/jupyter_app_launcher/icons/openclaw.svg
+  source:
+    - label: Open
+      id: filebrowser:open-path
+      args:
+        path: 2026/openclaw/00-track-index.ipynb
+
 - title: Classic LangChain Index
   description: Legacy lessons for historical comparison.
   type: jupyterlab-commands
