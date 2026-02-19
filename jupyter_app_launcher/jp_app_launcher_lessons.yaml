@@ -1,7 +1,8 @@
 - title: Lessons Home
-  description: Open the lessons landing notebook.
+  description: Launch the curated lessons dashboard.
   type: jupyterlab-commands
   catalog: Start Here
+  icon: /workspace/jupyter_app_launcher/icons/home.svg
   source:
     - label: Open
       id: filebrowser:open-path
@@ -9,19 +10,21 @@
         path: 00-home.ipynb
 
 - title: 2026 Ecosystem Index
-  description: Start all modern 2026 tracks from one index.
+  description: Entry point for all modern 2026 tracks.
   type: jupyterlab-commands
   catalog: Start Here
+  icon: /workspace/jupyter_app_launcher/icons/ecosystem.svg
   source:
     - label: Open
       id: filebrowser:open-path
       args:
         path: 2026/00-ecosystem-index.ipynb
 
-- title: 2026 LangChain Index
-  description: Modern LangChain progression track.
+- title: LangChain (2026)
+  description: Runnable/LCEL-first modern LangChain track.
   type: jupyterlab-commands
   catalog: 2026 Tracks
+  icon: /workspace/jupyter_app_launcher/icons/langchain.svg
   source:
     - label: Open
       id: filebrowser:open-path
@@ -29,9 +32,10 @@
         path: 2026/langchain/00-modern-track-index.ipynb
 
 - title: LiteLLM Track
-  description: Provider routing, reliability, and governance.
+  description: Routing, fallback, reliability, and governance.
   type: jupyterlab-commands
   catalog: 2026 Tracks
+  icon: /workspace/jupyter_app_launcher/icons/litellm.svg
   source:
     - label: Open
       id: filebrowser:open-path
@@ -39,9 +43,10 @@
         path: 2026/litellm/00-track-index.ipynb
 
 - title: LlamaIndex Track
-  description: Retrieval architecture and evaluation progression.
+  description: RAG retrieval architecture and evaluation.
   type: jupyterlab-commands
   catalog: 2026 Tracks
+  icon: /workspace/jupyter_app_launcher/icons/llamaindex.svg
   source:
     - label: Open
       id: filebrowser:open-path
@@ -49,9 +54,10 @@
         path: 2026/llamaindex/00-track-index.ipynb
 
 - title: DSPy Track
-  description: Programmatic prompting and optimization.
+  description: Program design, optimization, and release checks.
   type: jupyterlab-commands
   catalog: 2026 Tracks
+  icon: /workspace/jupyter_app_launcher/icons/dspy.svg
   source:
     - label: Open
       id: filebrowser:open-path
@@ -59,9 +65,10 @@
         path: 2026/dspy/00-track-index.ipynb
 
 - title: Agent CLIs Track
-  description: Tooling workflows, controls, and benchmarks.
+  description: Agent tooling workflows, controls, and benchmarks.
   type: jupyterlab-commands
   catalog: 2026 Tracks
+  icon: /workspace/jupyter_app_launcher/icons/agentcli.svg
   source:
     - label: Open
       id: filebrowser:open-path
@@ -69,9 +76,10 @@
         path: 2026/agent-clis/00-track-index.ipynb
 
 - title: Classic LangChain Index
-  description: Legacy track for comparison and evaluation.
+  description: Legacy lessons for historical comparison.
   type: jupyterlab-commands
   catalog: Classic
+  icon: /workspace/jupyter_app_launcher/icons/classic.svg
   source:
     - label: Open
       id: filebrowser:open-path

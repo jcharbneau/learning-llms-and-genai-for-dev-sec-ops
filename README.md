@@ -150,6 +150,7 @@ It installs Jupyter kernels for split notebook tracks:
 
 JupyterLab Launcher tiles are preconfigured for lesson entry points (Start Here, 2026 Tracks, Classic) via:
 - `jupyter_app_launcher/jp_app_launcher_lessons.yaml`
+- `jupyter_app_launcher/icons/*.svg`
 - `JUPYTER_APP_LAUNCHER_PATH=/workspace/jupyter_app_launcher`
 
 For `lessons/2026/agent-clis/`:
