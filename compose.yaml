@@ -3,6 +3,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        CLASSIC: ${CLASSIC:-0}
     ports:
       - "8888:8888"
     volumes:

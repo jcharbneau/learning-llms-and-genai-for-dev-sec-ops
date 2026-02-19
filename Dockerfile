@@ -1,4 +1,5 @@
 FROM python:3.12-slim
+ARG CLASSIC=0
 
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
@@ -25,12 +26,15 @@ COPY requirements-notebooks.txt requirements-notebooks-classic.txt ./
 RUN python -m venv "$VENV_MODERN" \
     && "$VENV_MODERN/bin/pip" install --upgrade pip setuptools wheel \
     && "$VENV_MODERN/bin/pip" install -r requirements-notebooks.txt \
-    && python -m venv "$VENV_CLASSIC" \
-    && "$VENV_CLASSIC/bin/pip" install --upgrade pip setuptools wheel \
-    && "$VENV_CLASSIC/bin/pip" install -r requirements-notebooks-classic.txt \
     && "$VENV_MODERN/bin/python" -m ipykernel install --prefix /usr/local --name python3 --display-name "Python 3 (modern-langchain)" \
-    && "$VENV_MODERN/bin/python" -m ipykernel install --prefix /usr/local --name python3-modern --display-name "Python 3 (modern-langchain)" \
-    && "$VENV_CLASSIC/bin/python" -m ipykernel install --prefix /usr/local --name python3-classic --display-name "Python 3 (classic-langchain)"
+    && "$VENV_MODERN/bin/python" -m ipykernel install --prefix /usr/local --name python3-modern --display-name "Python 3 (modern-langchain)"
+
+RUN if [ "$CLASSIC" = "1" ]; then \
+      python -m venv "$VENV_CLASSIC" \
+      && "$VENV_CLASSIC/bin/pip" install --upgrade pip setuptools wheel \
+      && "$VENV_CLASSIC/bin/pip" install -r requirements-notebooks-classic.txt \
+      && "$VENV_CLASSIC/bin/python" -m ipykernel install --prefix /usr/local --name python3-classic --display-name "Python 3 (classic-langchain)"; \
+    fi
 
 # Install OpenClaw CLI in-container for notebook exercises.
 RUN curl -fsSL --proto '=https' --tlsv1.2 https://openclaw.ai/install-cli.sh \

@@ -134,10 +134,17 @@ make notebooks-build
 make notebooks-up
 ```
 
+Build classic kernel support only when needed:
+
+```shell
+make notebooks-build-classic
+make notebooks-up
+```
+
 The notebook image includes the `openclaw` CLI so OpenClaw lesson cells can run inside Docker.
 The container runs as an unprivileged `notebook` user (uid/gid `1000`) and stores runtime state under `/home/notebook` (not `/root`).
-It also installs separate Jupyter kernels for split notebook tracks:
-- `Python 3 (classic-langchain)` (`python3-classic`) for `*-classic.ipynb`
+It installs Jupyter kernels for split notebook tracks:
+- `Python 3 (classic-langchain)` (`python3-classic`) for `lessons/classic/**/*-classic.ipynb` (only when built with `make notebooks-build-classic`)
 - `Python 3 (modern-langchain)` (`python3-modern`) for `lessons/2026/langchain/*.ipynb`
 - `Python 3 (modern-langchain)` (`python3`) as the default kernel
 
@@ -268,7 +275,7 @@ You can also run notebooks in Colab if preferred.
 - Install extensions: Python + Jupyter
 - Select interpreter: `.venv/bin/python` for local, or `/opt/venv-modern/bin/python` in container
 - Open notebooks from the `lessons/` folder and pick the matching kernel:
-  - `Python 3 (classic-langchain)` for `*-classic.ipynb`
+  - `Python 3 (classic-langchain)` for `lessons/classic/**/*-classic.ipynb` (requires classic build)
   - `Python 3 (modern-langchain)` for `lessons/2026/langchain/*.ipynb`
 
 ## Changelog 
