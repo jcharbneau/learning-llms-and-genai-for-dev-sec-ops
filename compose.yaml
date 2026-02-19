@@ -17,6 +17,7 @@ services:
       - AZURE_OPENAI_ENDPOINT=${AZURE_OPENAI_ENDPOINT:-}
       - OLLAMA_BASE_URL=${OLLAMA_BASE_URL:-http://host.docker.internal:11434}
       - OPENCLAW_HOME=/home/notebook/.openclaw
+      - JUPYTER_APP_LAUNCHER_PATH=/workspace/jupyter_app_launcher
     command:
       - "jupyter"
       - "lab"
@@ -24,4 +25,4 @@ services:
       - "--port=8888"
       - "--no-browser"
       - "--ServerApp.root_dir=/workspace/lessons"
-      - "--ServerApp.default_url=/lab/tree/00-home.ipynb"
+      - "--ServerApp.default_url=/lab"

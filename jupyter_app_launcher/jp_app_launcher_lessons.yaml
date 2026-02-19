@@ -1,0 +1,79 @@
+- title: Lessons Home
+  description: Open the lessons landing notebook.
+  type: jupyterlab-commands
+  catalog: Start Here
+  source:
+    - label: Open
+      id: filebrowser:open-path
+      args:
+        path: 00-home.ipynb
+
+- title: 2026 Ecosystem Index
+  description: Start all modern 2026 tracks from one index.
+  type: jupyterlab-commands
+  catalog: Start Here
+  source:
+    - label: Open
+      id: filebrowser:open-path
+      args:
+        path: 2026/00-ecosystem-index.ipynb
+
+- title: 2026 LangChain Index
+  description: Modern LangChain progression track.
+  type: jupyterlab-commands
+  catalog: 2026 Tracks
+  source:
+    - label: Open
+      id: filebrowser:open-path
+      args:
+        path: 2026/langchain/00-modern-track-index.ipynb
+
+- title: LiteLLM Track
+  description: Provider routing, reliability, and governance.
+  type: jupyterlab-commands
+  catalog: 2026 Tracks
+  source:
+    - label: Open
+      id: filebrowser:open-path
+      args:
+        path: 2026/litellm/00-track-index.ipynb
+
+- title: LlamaIndex Track
+  description: Retrieval architecture and evaluation progression.
+  type: jupyterlab-commands
+  catalog: 2026 Tracks
+  source:
+    - label: Open
+      id: filebrowser:open-path
+      args:
+        path: 2026/llamaindex/00-track-index.ipynb
+
+- title: DSPy Track
+  description: Programmatic prompting and optimization.
+  type: jupyterlab-commands
+  catalog: 2026 Tracks
+  source:
+    - label: Open
+      id: filebrowser:open-path
+      args:
+        path: 2026/dspy/00-track-index.ipynb
+
+- title: Agent CLIs Track
+  description: Tooling workflows, controls, and benchmarks.
+  type: jupyterlab-commands
+  catalog: 2026 Tracks
+  source:
+    - label: Open
+      id: filebrowser:open-path
+      args:
+        path: 2026/agent-clis/00-track-index.ipynb
+
+- title: Classic LangChain Index
+  description: Legacy track for comparison and evaluation.
+  type: jupyterlab-commands
+  catalog: Classic
+  source:
+    - label: Open
+      id: filebrowser:open-path
+      args:
+        path: classic/00-classic-track-index.ipynb

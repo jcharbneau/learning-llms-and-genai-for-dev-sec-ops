@@ -148,6 +148,10 @@ It installs Jupyter kernels for split notebook tracks:
 - `Python 3 (modern-langchain)` (`python3-modern`) for `lessons/2026/langchain/*.ipynb`
 - `Python 3 (modern-langchain)` (`python3`) as the default kernel
 
+JupyterLab Launcher tiles are preconfigured for lesson entry points (Start Here, 2026 Tracks, Classic) via:
+- `jupyter_app_launcher/jp_app_launcher_lessons.yaml`
+- `JUPYTER_APP_LAUNCHER_PATH=/workspace/jupyter_app_launcher`
+
 For `lessons/2026/agent-clis/`:
 - `openclaw` is preinstalled in the container image and is the primary in-container CLI path.
 - Additional CLIs (`codex`, `claude`, `opencode`) are attempted as optional npm installs in Docker build and may vary by runtime/package availability.
