@@ -80,7 +80,7 @@ More to come !
 - Let us know what topic you'd like to see a lesson on ? Open a github issue to ask it
 - Submit new lessons, send us corrections etc.. to improve it.
 
-- Run your own meetup/hackaton using this repo as base and report back ! We love to hear those stories, send us pictures or videos ! 
+- Run your own meetup/hackaton using this repo as base and report back ! We love to hear those stories, send us pictures or videos !
 - Send thankyou tweet to [@patrickdebois](https://twitter.com/patrick.debois)
 
 ## Modernization updates (2026-02-18)
@@ -216,6 +216,7 @@ curl http://localhost:11434/api/tags
 ### OpenClaw prerequisites
 - Docker workflow: `openclaw` CLI is preinstalled in the notebook image (`Dockerfile`)
 - OpenAI use cases: set `OPENAI_API_KEY` in `.env` (or shell env before `make notebooks-up`)
+- Gateway API lessons (`lessons/2026/openclaw/02..09`): set `OPENCLAW_GATEWAY_TOKEN` in `.env` for direct OpenClaw `/v1/chat/completions` calls
 - Ollama use cases from Docker:
   - Run Ollama on your host machine
   - Keep `OLLAMA_BASE_URL=http://host.docker.internal:11434` (default in `compose.yaml`)
@@ -266,6 +267,14 @@ make notebooks-check-clean
 make notebooks-check-curriculum
 ```
 
+Daily workflow (recommended):
+
+```shell
+make notebooks-clean
+git status
+make notebooks-check-clean
+```
+
 Why notebook files change after runs:
 - execution counts and cell outputs are stored directly in `.ipynb` JSON
 - kernel metadata can also shift between local/container runs
@@ -275,6 +284,10 @@ How this repo prevents churn:
 - `make dev-tools-install` installs the filter and pre-commit hooks locally
 - `make notebooks-clean` strips outputs before commit
 - `make notebooks-check-clean` fails if tracked notebook outputs remain
+
+First-time setup note:
+- after running `make dev-tools-install`, git may show a small `.gitattributes` update from filter wiring.
+- commit that change once; after that, notebook output churn should be significantly reduced.
 
 What this provides:
 - `pre-commit` + `nbstripout`: strips notebook outputs before commit
@@ -294,7 +307,7 @@ You can also run notebooks in Colab if preferred.
   - `Python 3 (classic-langchain)` for `lessons/classic/**/*-classic.ipynb` (requires classic build)
   - `Python 3 (modern-langchain)` for `lessons/2026/langchain/*.ipynb`
 
-## Changelog 
+## Changelog
 - 0.1 version with initial langchain syntax
 - 0.2 version adapted to new langchain-community , langchain-openai and new syntax
 - 0.3 modernization baseline: Python 3.12 target, venv-first local workflow, refreshed Docker/Compose runtime, and repository hygiene updates
