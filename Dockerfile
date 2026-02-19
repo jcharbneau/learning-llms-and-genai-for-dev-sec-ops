@@ -11,9 +11,14 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 WORKDIR /workspace
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
+    bash \
     build-essential \
     curl \
     git \
+    jq \
+    nodejs \
+    npm \
+    ripgrep \
     && rm -rf /var/lib/apt/lists/*
 
 COPY requirements-notebooks.txt requirements-notebooks-classic.txt ./
@@ -31,6 +36,10 @@ RUN python -m venv "$VENV_MODERN" \
 RUN curl -fsSL --proto '=https' --tlsv1.2 https://openclaw.ai/install-cli.sh \
     | bash -s -- --prefix /opt/openclaw --no-onboard \
     && ln -s /opt/openclaw/bin/openclaw /usr/local/bin/openclaw
+
+# Install optional agent CLIs used by 2026 agent-clis lessons.
+# These are best-effort because package names and distribution channels may change.
+RUN npm install -g @openai/codex @anthropic-ai/claude-code opencode-ai || true
 
 RUN groupadd --gid 1000 notebook \
     && useradd --uid 1000 --gid notebook --create-home --shell /bin/bash notebook \
