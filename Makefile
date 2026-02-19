@@ -2,7 +2,7 @@ DOCKER_COMPOSE ?= docker compose
 SERVICE ?= notebooks
 NOTEBOOK_PORT ?= 8888
 
-.PHONY: help notebooks-build notebooks-up notebooks-down notebooks-logs notebooks-url notebooks-open notebooks-clean notebooks-check-clean notebooks-pair dev-tools-install test-smoke test-e2e-notebooks test-e2e-notebooks-full
+.PHONY: help notebooks-build notebooks-up notebooks-down notebooks-logs notebooks-url notebooks-open notebooks-clean notebooks-check-clean notebooks-check-curriculum notebooks-pair dev-tools-install test-smoke test-e2e-notebooks test-e2e-notebooks-full
 
 help:
 	@echo "Targets:"
@@ -14,6 +14,7 @@ help:
 	@echo "  make notebooks-open   Open latest Jupyter login URL in browser"
 	@echo "  make notebooks-clean  Strip notebook outputs/execution counts"
 	@echo "  make notebooks-check-clean  Fail if notebooks contain outputs"
+	@echo "  make notebooks-check-curriculum  Validate 2026 lesson contract rules"
 	@echo "  make notebooks-pair NOTEBOOK=path.ipynb  Pair notebook with jupytext markdown"
 	@echo "  make dev-tools-install Install notebook hygiene tooling (pre-commit/nbstripout/jupytext)"
 	@echo "  make test-smoke       Run offline smoke tests for notebooks/scripts"
@@ -77,6 +78,9 @@ notebooks-clean:
 
 notebooks-check-clean:
 	python scripts/check_notebooks_clean.py
+
+notebooks-check-curriculum:
+	python scripts/check_curriculum_contract.py
 
 notebooks-pair:
 	@if [ -z "$(NOTEBOOK)" ]; then \
