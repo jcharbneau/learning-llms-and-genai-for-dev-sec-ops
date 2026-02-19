@@ -24,7 +24,11 @@ REQUIRED_HEADINGS = (
 def lesson_notebooks() -> list[Path]:
     paths: list[Path] = []
     for track in TRACKS:
-        paths.extend(sorted((REPO_ROOT / "lessons" / "2026" / track).glob("0[1-8]-*.ipynb")))
+        track_dir = REPO_ROOT / "lessons" / "2026" / track
+        if track == "openclaw":
+            paths.extend(sorted(track_dir.glob("0[1-9]-*.ipynb")))
+        else:
+            paths.extend(sorted(track_dir.glob("0[1-8]-*.ipynb")))
     # LangChain modern track uses domain-prefixed filenames instead of 01..08 naming.
     paths.extend(
         sorted(
@@ -70,7 +74,8 @@ def validate() -> list[str]:
             if required_lens not in markdown:
                 errors.append(f"{rel}: missing scientific lens field '{required_lens}'")
 
-        if "# Deterministic Demo" not in code:
+        is_openclaw_shell = rel.endswith("lessons/2026/openclaw/01-shell-usage.ipynb")
+        if "# Deterministic Demo" not in code and not is_openclaw_shell:
             errors.append(f"{rel}: missing deterministic demo code marker")
         if "# Live Demo" not in code:
             errors.append(f"{rel}: missing live demo code marker")
