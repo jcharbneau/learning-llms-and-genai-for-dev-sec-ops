@@ -8,7 +8,7 @@ The lessons are mainly based on the [Langchain](https://github.com/langchain-ai/
 ### Tracks
 - `lessons/classic/<area>/*-classic.ipynb`: legacy/classic LangChain-era demonstrations kept for comparison and evaluation
 - `lessons/2026/langchain/*.ipynb`: modern 2026 equivalents using current Runnable/LCEL-style patterns
-- `lessons/2026/<batch>/*.ipynb`: new ecosystem lessons grouped by 2026 topic batches (LiteLLM, LlamaIndex, DSPy, agent CLIs, ...)
+- `lessons/2026/<batch>/*.ipynb`: new ecosystem lessons grouped by 2026 topic batches (LiteLLM, LlamaIndex, DSPy, agent CLIs, OpenClaw, ...)
 
 ### 2026 curriculum contract (non-LangChain tracks)
 The 2026 ecosystem tracks in:
@@ -16,6 +16,7 @@ The 2026 ecosystem tracks in:
 - `lessons/2026/llamaindex/`
 - `lessons/2026/dspy/`
 - `lessons/2026/agent-clis/`
+- `lessons/2026/openclaw/`
 
 follow a strict lesson structure designed for progressive learning (01 -> 08):
 - `What This Lesson Is`

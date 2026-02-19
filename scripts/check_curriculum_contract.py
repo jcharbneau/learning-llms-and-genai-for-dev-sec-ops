@@ -9,7 +9,7 @@ import sys
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
-TRACKS = ("litellm", "llamaindex", "dspy", "agent-clis")
+TRACKS = ("litellm", "llamaindex", "dspy", "agent-clis", "openclaw")
 REQUIRED_HEADINGS = (
     "What This Lesson Is",
     "Scientific Lens",
