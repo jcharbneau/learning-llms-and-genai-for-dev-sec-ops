@@ -54,13 +54,19 @@ This roadmap defines the lesson scope for 2026 batches beyond the classic track.
   - `07-latency-and-cost-benchmarking.ipynb`
   - `08-team-adoption-playbook.ipynb`
 
-## Authoring Standard
-- Every lesson should include:
-  - What it is
-  - Why it matters
-  - When to use it
-  - Prerequisites
-  - Guided walkthrough
-  - Practice exercises
-  - Common pitfalls
-  - Production notes
+## Curriculum Standards (Locked)
+- Scope in this pass: `litellm`, `llamaindex`, `dspy`, `agent-clis` only.
+- Each `01..08` notebook must include:
+  - `What This Lesson Is`
+  - `Scientific Lens` (Concept, Measure, Validity Limit)
+  - `How It Works`
+  - `Code Walkthrough`
+  - `Applied Labs` (unique per notebook)
+  - `Validation Checklist` (unique per notebook)
+  - `Further Reading` (official/primary sources)
+- Runtime pattern per notebook:
+  - deterministic demo path (always runnable)
+  - live demo path (provider/CLI backed with graceful skip)
+- Progression requirement: `01` to `08` increases in complexity and operational realism.
+
+See `lessons/2026/CURRICULUM_SPEC.md` for the full per-notebook spec.
