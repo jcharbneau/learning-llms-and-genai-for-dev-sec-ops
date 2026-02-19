@@ -2,10 +2,11 @@ DOCKER_COMPOSE ?= docker compose
 SERVICE ?= notebooks
 NOTEBOOK_PORT ?= 8888
 
-.PHONY: help notebooks-build notebooks-build-classic notebooks-up notebooks-down notebooks-logs notebooks-url notebooks-open notebooks-clean notebooks-check-clean notebooks-check-curriculum notebooks-pair dev-tools-install test-smoke test-e2e-notebooks test-e2e-notebooks-full
+.PHONY: help rebuild notebooks-build notebooks-build-classic notebooks-up notebooks-down notebooks-logs notebooks-url notebooks-open notebooks-clean notebooks-check-clean notebooks-check-curriculum notebooks-pair dev-tools-install test-smoke test-e2e-notebooks test-e2e-notebooks-full
 
 help:
 	@echo "Targets:"
+	@echo "  make rebuild         Recreate notebooks env (down, build, up, open)"
 	@echo "  make notebooks-build  Build images (modern only, CLASSIC=0)"
 	@echo "  make notebooks-build-classic Build images with classic kernel/env (CLASSIC=1)"
 	@echo "  make notebooks-up     Start notebooks and print login URL"
@@ -27,6 +28,12 @@ notebooks-build:
 
 notebooks-build-classic:
 	CLASSIC=1 $(DOCKER_COMPOSE) build
+
+rebuild:
+	$(MAKE) notebooks-down
+	$(DOCKER_COMPOSE) build
+	$(MAKE) notebooks-up
+	$(MAKE) notebooks-open
 
 notebooks-up:
 	$(DOCKER_COMPOSE) up -d
