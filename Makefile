@@ -75,6 +75,7 @@ notebooks-open:
 
 dev-tools-install:
 	pip install -r requirements-dev.txt
+	nbstripout --install --attributes .gitattributes
 	pre-commit install
 
 notebooks-clean:

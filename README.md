@@ -260,6 +260,16 @@ make notebooks-check-clean
 make notebooks-check-curriculum
 ```
 
+Why notebook files change after runs:
+- execution counts and cell outputs are stored directly in `.ipynb` JSON
+- kernel metadata can also shift between local/container runs
+
+How this repo prevents churn:
+- `.gitattributes` applies `nbstripout` to `*.ipynb`
+- `make dev-tools-install` installs the filter and pre-commit hooks locally
+- `make notebooks-clean` strips outputs before commit
+- `make notebooks-check-clean` fails if tracked notebook outputs remain
+
 What this provides:
 - `pre-commit` + `nbstripout`: strips notebook outputs before commit
 - `jupytext` support: optional pairing for text-first notebook editing
